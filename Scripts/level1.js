@@ -1,31 +1,67 @@
-const {Engine, World, Bodies, Mouse, MouseConstraint, Constraint} = Matter;
+const {Engine, Bodies, Mouse, MouseConstraint, Composite, Render, Runner, Constraint} = Matter;
 
 let ground;
-let box;
+const boxes = [];
 let bird;
 let world, engine;
 let mConstraint;
+let render;
+let runner;
+let constraint;
+let slingshot;
 
 function setup() {
-    const canvas = createCanvas(600, 400);
+    var canvas = document.querySelector('canvas');
+    var width = canvas.width;
+    var height = canvas.height;
     engine = Engine.create();
     world = engine.world;
     ground = new staticBox(width/2, height-10, width, 20);
-    box = new Box(450, 300, 50, 75);
-    bird = new Bird(50, 300, 25);
+    for (let i = 0; i < 3; i++) {
+        boxes[i] = new Box(450, 300-i*75, 50, 75);
+    }
+    bird = new Bird(150, 300, 15);
+
+    slingshot = new Slingshot(150, 300, bird.body);
 
     const mouse = Mouse.create(canvas.elt);
     const options = {
-        mouse: mouse
+        mouse: mouse,
+        constraint: {
+            render: {
+                visible: false
+            }
+        }
     }
     mConstraint = MouseConstraint.create(engine, options);
-    World.add(world, mConstraint);
+    Composite.add(world, mConstraint);
+    render = Render.create({
+        element: document.body,
+        canvas: canvas,
+        engine: engine,
+        options: {
+            width: width,
+            height: height,
+            wireframes: false,
+            background: 'rgb(255,255,255)'
+        }
+    });
+    runner = Runner.create();
 }
 
-function draw() {
-    background(0);
-    Engine.update(engine);
-    ground.show();
-    box.show();
-    bird.show();
+onmouseup = (event) => {
+    setTimeout(() => {
+        slingshot.fly();
+    }, 10);
 }
+
+onkeydown = (event) => {
+    if (event.key == ' ') {
+        bird = new Bird(150, 300, 15);
+        slingshot.attach(bird.body);
+    }
+}
+
+setup();
+Render.run(render);
+Runner.run(runner, engine);
