@@ -63,7 +63,7 @@ onmouseup = (event) => {
     setTimeout(() => {
         slingshot.fly();
         bird.body.collisionFilter.category = 0b10;
-    }, 25);
+    }, 10);
     if (--numOfShots > 0) {
         setTimeout(() => {
             bird = new Bird(width*.12, height*.85, 15);
