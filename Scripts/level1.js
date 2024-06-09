@@ -12,7 +12,10 @@ function setup() {
     canvas = document.querySelector('canvas');
     width = window.innerWidth * .8;
     height = window.innerHeight * .8;
+    canvas.width = width;
+    canvas.height = height;
     engine = Engine.create();
+    engine.gravity.y = .7;
     world = engine.world;
     for (let i = 0; i < 3; i++) {
         boxes[i] = new Box(0.75*width, height-75-i*75, 50, 75);
@@ -60,7 +63,7 @@ onmouseup = (event) => {
     setTimeout(() => {
         slingshot.fly();
         bird.body.collisionFilter.category = 0b10;
-    }, 8);
+    }, 25);
     if (--numOfShots > 0) {
         setTimeout(() => {
             bird = new Bird(width*.12, height*.85, 15);
@@ -82,7 +85,7 @@ function checkCollisions() {
         --numOfPigs;
     }
     for (let i = 0; i < boxes.length; i++) {
-        if (Collision.collides(boxes[i].body, pig.body) != null && boxes[i].body.speed > 2.00) {
+        if (Collision.collides(boxes[i].body, pig.body) != null && boxes[i].body.speed > 1.00) {
             setTimeout(() => {
                 pig.die();
             }, 200);
