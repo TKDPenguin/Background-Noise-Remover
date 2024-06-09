@@ -1,28 +1,32 @@
-const {Engine, Bodies, Mouse, MouseConstraint, Composite, Render, Runner, Constraint} = Matter;
+const {Engine, Bodies, Mouse, MouseConstraint, Composite, Render, Runner, Constraint, Collision} = Matter;
 
-let ground;
 const boxes = [];
-let bird;
-let world, engine;
-let mConstraint;
-let render;
-let runner;
-let constraint;
-let slingshot;
+const boundaries = [];
+let ground, bird, pig, slingshot;
+let world, engine, mConstraint, render, runner, constraint, collision;
+let canvas, width, height;
+let numOfShots = 3;
+let numOfPigs = 1;
 
 function setup() {
-    var canvas = document.querySelector('canvas');
-    var width = canvas.width;
-    var height = canvas.height;
+    canvas = document.querySelector('canvas');
+    width = canvas.width;
+    height = canvas.height;
     engine = Engine.create();
     world = engine.world;
-    ground = new staticBox(width/2, height-10, width, 20);
     for (let i = 0; i < 3; i++) {
-        boxes[i] = new Box(450, 300-i*75, 50, 75);
+        boxes[i] = new Box(0.75*width, height-75-i*75, 50, 75);
     }
-    bird = new Bird(150, 300, 15);
+    boundaries[0] = new staticBox(width+10, height/2, 20, height);
+    boundaries[1] = new staticBox(width/2, -10, width, 20);
+    boundaries[2] = new staticBox(-10, height/2, 20, height);
+    boundaries[3] = new staticBox(width/2, height+10, width, 20);
 
-    slingshot = new Slingshot(150, 300, bird.body);
+    pig = new Pig(.75*width-50, height-50, 25);
+
+    bird = new Bird(width*.1, height*.85, 15);
+
+    slingshot = new Slingshot(width*.1, height*.85, bird.body);
 
     const mouse = Mouse.create(canvas.elt);
     const options = {
@@ -52,16 +56,44 @@ function setup() {
 onmouseup = (event) => {
     setTimeout(() => {
         slingshot.fly();
-    }, 10);
+    }, 8);
+    if (--numOfShots > 0) {
+        setTimeout(() => {
+            bird = new Bird(width*.1, height*.85, 15);
+            slingshot.attach(bird.body);
+        }, 1000);
+    }
 }
 
-onkeydown = (event) => {
-    if (event.key == ' ') {
-        bird = new Bird(150, 300, 15);
-        slingshot.attach(bird.body);
+// onkeydown = (event) => {
+//     if (event.key == ' ') {
+//         bird = new Bird(width*.1, height*.82, 15);
+//         slingshot.attach(bird.body);
+//     }
+// }
+
+function checkCollisions() {
+    if (Collision.collides(pig.body, bird.body) != null) {
+        pig.die();
+        --numOfPigs;
     }
+    if (numOfPigs <= 0) {
+        win();
+    }
+    if (numOfShots <= 0) {
+        lose();
+    }
+}
+
+function win() {
+
+}
+
+function lose() {
+
 }
 
 setup();
 Render.run(render);
 Runner.run(runner, engine);
+setInterval(checkCollisions, 10)
