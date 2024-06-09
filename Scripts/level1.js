@@ -10,8 +10,8 @@ let numOfPigs = 1;
 
 function setup() {
     canvas = document.querySelector('canvas');
-    width = canvas.width;
-    height = canvas.height;
+    width = window.innerWidth * .8;
+    height = window.innerHeight * .8;
     engine = Engine.create();
     world = engine.world;
     for (let i = 0; i < 3; i++) {
