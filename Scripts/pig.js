@@ -1,6 +1,6 @@
 class Pig {
     constructor(x, y, r) {
-        this.body = Matter.Bodies.circle(x, y, r);
+        this.body = Matter.Bodies.circle(x, y, r, {collisionFilter: {category: 0b10}});
         this.body.render.fillStyle = 'green';
         Matter.Composite.add(world, this.body);
         this.r = r;
