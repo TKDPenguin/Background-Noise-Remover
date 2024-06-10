@@ -2,16 +2,19 @@ const {Engine, Bodies, Mouse, MouseConstraint, Composite, Render, Runner, Constr
 
 const boxes = [];
 const boundaries = [];
+const shotBirds = [];
 let bird, pig, slingshot;
 let world, engine, mConstraint, render, runner, constraint, collision;
 let canvas, width, height;
 let numOfShots = 3;
 let numOfPigs = 1;
+let index = 0;
+let bodies = [];
 
 function setup() {
     canvas = document.querySelector('canvas');
-    width = window.innerWidth * .8;
-    height = window.innerHeight * .8;
+    width = window.innerWidth;
+    height = window.innerHeight * .95;
     canvas.width = width;
     canvas.height = height;
     engine = Engine.create();
@@ -31,7 +34,8 @@ function setup() {
 
     slingshot = new Slingshot(width*.12, height*.85, bird.body);
 
-    const mouse = Mouse.create(canvas.elt)
+    const mouse = Mouse.create(canvas.elt);
+    console.log(mouse);
     const options = {
         mouse: mouse,
         constraint: {
@@ -60,16 +64,26 @@ function setup() {
 }
 
 onmouseup = (event) => {
-    setTimeout(() => {
-        slingshot.fly();
-        bird.body.collisionFilter.category = 0b10;
-    }, 25);
-    if (--numOfShots > 0) {
-        setTimeout(() => {
-            bird = new Bird(width*.12, height*.85, 15);
-            slingshot.attach(bird.body);
-        }, 1000);
+    for (let i = 0; i < bodies.length; i++) {
+        if (bodies[i] == bird.body) {
+            setTimeout(() => {
+                slingshot.fly();
+                bird.body.collisionFilter.category = 0b10;
+                shotBirds[index++] = bird;
+            }, 10);
+            if (--numOfShots > 0) {
+                setTimeout(() => {
+                    bird = new Bird(width*.12, height*.85, 15);
+                    slingshot.attach(bird.body);
+                }, 1000);
+            }       
+        }
     }
+}
+
+onmousedown = (event) => {
+    bodies = Matter.Query.point(Composite.allBodies(world), {x: mConstraint.mouse.position.x, y: mConstraint.mouse.position.y});
+    console.log(bodies);
 }
 
 // onkeydown = (event) => {
@@ -80,9 +94,11 @@ onmouseup = (event) => {
 // }
 
 function checkCollisions() {
-    if (Collision.collides(pig.body, bird.body) != null) {
-        pig.die();
-        --numOfPigs;
+    for (let i = 0; i < shotBirds.length; i++) {
+        if (Collision.collides(pig.body, shotBirds[i].body) != null) {
+            pig.die();
+            --numOfPigs;
+        }
     }
     for (let i = 0; i < boxes.length; i++) {
         if (Collision.collides(boxes[i].body, pig.body) != null && boxes[i].body.speed > 1.00) {
@@ -115,4 +131,4 @@ function lose() {
 setup();
 Render.run(render);
 Runner.run(runner, engine);
-let checkInterval = setInterval(checkCollisions, 10);
+let checkInterval = setInterval(checkCollisions, 1);
