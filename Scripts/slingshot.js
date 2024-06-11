@@ -11,7 +11,8 @@ class Slingshot {
             render: {
                 strokeStyle: 'black',
                 type: "line"
-            }
+            },
+            damping: .7
         });
         Matter.Composite.add(world, this.sling);
     }

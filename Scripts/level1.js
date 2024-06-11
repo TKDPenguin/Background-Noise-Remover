@@ -10,11 +10,15 @@ let numOfShots = 3;
 let numOfPigs = 1;
 let index = 0;
 let bodies = [];
+let retryButton, nextButton, backButton, textBox;
+let gameOver = false;
 
 function setup() {
     canvas = document.querySelector('canvas');
     width = window.innerWidth;
     height = window.innerHeight * .95;
+    console.log(width);
+    console.log(height);
     canvas.width = width;
     canvas.height = height;
     engine = Engine.create();
@@ -28,7 +32,7 @@ function setup() {
     boundaries[2] = new staticBox(-25, height/2, 50, height);
     boundaries[3] = new staticBox(width/2, height+25, width, 50);
 
-    pig = new Pig(.75*width+75, height-50, 25);
+    pig = new Pig(.75*width-50, height-50, 25);
 
     bird = new Bird(width*.12, height*.85, 15);
 
@@ -65,12 +69,12 @@ function setup() {
 
 onmouseup = (event) => {
     for (let i = 0; i < bodies.length; i++) {
-        if (bodies[i] == bird.body) {
+        if (bodies[i] == bird.body & mConstraint.mouse.collisionFilter != 2) {
             setTimeout(() => {
                 slingshot.fly();
                 bird.body.collisionFilter.category = 0b10;
                 shotBirds[index++] = bird;
-            }, 10);
+            }, 12);
             if (--numOfShots > 0) {
                 setTimeout(() => {
                     bird = new Bird(width*.12, height*.85, 15);
@@ -83,7 +87,17 @@ onmouseup = (event) => {
 
 onmousedown = (event) => {
     bodies = Matter.Query.point(Composite.allBodies(world), {x: mConstraint.mouse.position.x, y: mConstraint.mouse.position.y});
-    console.log(bodies);
+    if (mConstraint.mouse.collisionFilter == 2) {
+        for (let i = 0; i < bodies.length; i++) {
+            if (bodies[i] == retryButton.body) {
+                reloadLevel();
+            } else if (bodies[i] == backButton.body) {
+                backtoTitle();
+            } else if (nextButton != null && bodies[i] == nextButton.body) {
+                nextLevel();
+            }
+        }
+    }
 }
 
 // onkeydown = (event) => {
@@ -95,7 +109,7 @@ onmousedown = (event) => {
 
 function checkCollisions() {
     for (let i = 0; i < shotBirds.length; i++) {
-        if (Collision.collides(pig.body, shotBirds[i].body) != null) {
+        if (Collision.collides(pig.body, shotBirds[i].body) != null && gameOver == false) {
             pig.die();
             --numOfPigs;
         }
@@ -119,13 +133,50 @@ function checkCollisions() {
 function win() {
     console.log("You win!!");
     mConstraint.mouse.collisionFilter = 2;
-    bird.body.collisionFilter = 1;
+    let menu = new staticBox(width/2, height/2, width*.25, 3*height/4, 1);
+    nextButton = new staticBox(width*.59, 3*height/4, width*.05, height*.1);
+    nextButton.setImage("../Images/next.png");
+    retryButton = new staticBox(width*.505, 3*height/4, width*.05, height*.1);
+    retryButton.setImage("../Images/retry.png");
+    backButton = new staticBox(width*.415, 3*height/4, width*.05, height*.1);
+    backButton.setImage("../Images/menu.png");
+    textBox = new staticBox(width/2, height*.35, width*.23, height/4);
+    textBox.setImage("../Images/win_text.png");
+    gameOver = true;
     clearInterval(checkInterval);
+}
+
+function nextLevel() {
+    let newUrl = "http://127.0.0.1:5500/Views/level2.html";
+    window.location = newUrl;
+}
+
+function reloadLevel() {
+    let newUrl = "http://127.0.0.1:5500/Views/level1.html";
+    window.location = newUrl;
+}
+
+function backtoTitle() {
+    let newUrl = "http://127.0.0.1:5500/Views/titleScreen.html";
+    window.location = newUrl;
 }
 
 function lose() {
     console.log("You lose :(");
-    clearInterval(checkInterval);
+    setTimeout(() => {
+        if (!gameOver) {
+            mConstraint.mouse.collisionFilter = 2;
+            let menu = new staticBox(width/2, height/2, width*.25, 3*height/4, 1);
+            retryButton = new staticBox(width*.55, 3*height/4, width*.05, height*.1);
+            retryButton.setImage("../Images/retry.png");
+            backButton = new staticBox(width*.45, 3*height/4, width*.05, height*.1);
+            backButton.setImage("../Images/menu.png");
+            textBox = new staticBox(width/2, height*.35, width*.23, height/4);
+            textBox.setImage("../Images/lose_text.png");
+            clearInterval(checkInterval);
+        }
+        gameOver = true;
+    }, 3000);
 }
 
 setup();
