@@ -5,4 +5,8 @@ class Box {
         this.w = w;
         this.h = h;
     }
+
+    setImage(image) {
+        this.body.render.sprite.texture = image;
+    }
 }

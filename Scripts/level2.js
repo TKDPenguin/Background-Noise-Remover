@@ -1,15 +1,33 @@
-const {Engine, Bodies, Mouse, MouseConstraint, Composite, Render, Runner, Constraint, Collision} = Matter;
+var {Engine, Bodies, Mouse, MouseConstraint, Composite, Render, Runner, Constraint, Collision} = Matter;
 
-const boxes = [];
-const boundaries = [];
-const shotBirds = [];
-let bird, pig, slingshot;
+var boxes = [];
+var boundaries = [];
+var pigs = [];
+var shotBirds = [];
+let bird, slingshot;
 let world, engine, mConstraint, render, runner, constraint, collision;
 let canvas, width, height;
 let numOfShots = 3;
 let numOfPigs = 1;
 let index = 0;
 let bodies = [];
+let retryButton, nextButton, backButton, textBox;
+let gameOver = false;
+let currLevel = 2;
+
+function spawnPigs() {
+    for (let i = 0; i < numOfPigs; i++) {
+        pigs[i] = new Pig(width*.7, height*.4, 25);
+    }
+}
+
+function spawnBoxes() {
+    for (let j = 0; j < 5; j++) {
+        for (let i = 0; i < 7; i++) {
+            boxes[7*j+i] = new Box(0.75*width-j*50, height-i*75, 50, 75);
+        }
+    }
+}
 
 function setup() {
     canvas = document.querySelector('canvas');
@@ -20,17 +38,11 @@ function setup() {
     engine = Engine.create();
     engine.gravity.y = .7;
     world = engine.world;
-    for (let j = 0; j < 5; j++) {
-        for (let i = 0; i < 7; i++) {
-            boxes[i*j+i] = new Box(0.75*width-j*50, height-i*75, 50, 75);
-        }
-    }
+    
     boundaries[0] = new staticBox(width+25, height/2, 50, height);
     boundaries[1] = new staticBox(width/2, -25, width, 50);
     boundaries[2] = new staticBox(-25, height/2, 50, height);
     boundaries[3] = new staticBox(width/2, height+25, width, 50);
-
-    pig = new Pig(width*.7, height*.4, 25);
 
     bird = new Bird(width*.12, height*.85, 15);
 
