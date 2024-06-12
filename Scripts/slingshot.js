@@ -6,7 +6,7 @@ class Slingshot {
                 y: yPos
             },
             bodyB: body,
-            stiffness: 0.2,
+            stiffness: 0.05,
             length: 30,
             render: {
                 strokeStyle: 'black',
@@ -15,11 +15,6 @@ class Slingshot {
             damping: .7
         });
         Matter.Composite.add(world, this.sling);
-    }
-
-    fly() {
-        this.sling.bodyB = null;
-        this.sling.render.visible = false;
     }
 
     attach(body) {
