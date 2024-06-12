@@ -55,7 +55,7 @@ function fly() {
     let yDist = slingshot.sling.pointA.y - bird.body.position.y;
     console.log("xDist: " + xDist);
     console.log("yDist: " + yDist);
-    let forceToAdd = {x: 0.3*xDist, y: 0.3*yDist};
+    let forceToAdd = {x: 0.2*xDist, y: 0.2*yDist};
     Matter.Body.setVelocity(bird.body, forceToAdd);
     Composite.remove(engine.world, slingshot.sling);
     if (--numOfShots > 0) {
