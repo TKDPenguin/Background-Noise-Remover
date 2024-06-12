@@ -10,10 +10,10 @@ function setup() {
     engine.gravity.y = .7;
     world = engine.world;
 
-    boundaries[0] = new staticBox(width+25, height/2, 50, height);
-    boundaries[1] = new staticBox(width/2, -25, width, 50);
-    boundaries[2] = new staticBox(-25, height/2, 50, height);
-    boundaries[3] = new staticBox(width/2, height+25, width, 50);
+    boundaries[0] = new staticBox(width+50, height/2, 100, height);
+    boundaries[1] = new staticBox(width/2, -50, width, 100);
+    boundaries[2] = new staticBox(-50, height/2, 100, height);
+    boundaries[3] = new staticBox(width/2, height+50, width, 100);
 
     bird = new Bird(width*.12, height*.85, 15);
 
@@ -53,6 +53,16 @@ function fly() {
     console.log(slingshot.sling.pointA.x);
     let xDist = slingshot.sling.pointA.x - bird.body.position.x;
     let yDist = slingshot.sling.pointA.y - bird.body.position.y;
+    if (xDist > 200) {
+        xDist = 200;
+    } else if (xDist < -200) {
+        xDist = -200;
+    }
+    if (yDist > 200) {
+        yDist = 200;
+    } else if (yDist < -200) {
+        yDist = -200;
+    }
     console.log("xDist: " + xDist);
     console.log("yDist: " + yDist);
     let forceToAdd = {x: 0.3*xDist, y: 0.3*yDist};
@@ -94,6 +104,12 @@ onmousedown = (event) => {
 
 
 function checkCollisions() {
+    let xDist = slingshot.sling.pointA.x - bird.body.position.x;
+    let yDist = slingshot.sling.pointA.y - bird.body.position.y;
+    if (Math.sqrt(xDist*xDist + yDist*yDist) >= 200) {
+        slingshot.sling.length = 200;
+        slingshot.sling.stiffness = 1;
+    }
     for (let i = 0; i < shotBirds.length; i++) {
         for (let j = 0; j < pigs.length; j++) {
             if (Collision.collides(pigs[j].body, shotBirds[i].body) != null && gameOver == false) {
