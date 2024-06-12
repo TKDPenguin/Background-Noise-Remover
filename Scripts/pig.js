@@ -7,9 +7,11 @@ class Pig {
         }});
         Matter.Composite.add(world, this.body);
         this.r = r;
+        this.isAlive = true;
     }
 
     die() {
         Matter.Composite.remove(world, this.body);
+        this.isAlive = false;
     }
 }

@@ -65,7 +65,7 @@ function fly() {
     }
     console.log("xDist: " + xDist);
     console.log("yDist: " + yDist);
-    let forceToAdd = {x: 0.3*xDist, y: 0.3*yDist};
+    let forceToAdd = {x: 0.2*xDist, y: 0.2*yDist};
     Matter.Body.setVelocity(bird.body, forceToAdd);
     Composite.remove(engine.world, slingshot.sling);
     if (--numOfShots > 0) {
@@ -126,13 +126,18 @@ function checkCollisions() {
                     pigs[j].die();
                 }, 200);
                 --numOfPigs;
+                console.log(numOfPigs);
             }
         }
     }
-    if (numOfPigs <= 0) {
-        win();
+    let someAlive = false;
+    for (let i = 0; i < pigs.length; i++) {
+        someAlive = someAlive || pigs[i].isAlive;
     }
-    else if (numOfShots <= 0) {
+    if (!someAlive) {
+        win();
+    } else if (numOfShots <= 0) {
+        console.log("hi")
         lose();
     }
 }
