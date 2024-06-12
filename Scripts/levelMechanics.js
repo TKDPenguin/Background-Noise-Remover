@@ -48,20 +48,31 @@ function setup() {
     runner = Runner.create();
 }
 
+function fly() {
+    console.log(bird.body.position.x);
+    console.log(slingshot.sling.pointA.x);
+    let xDist = slingshot.sling.pointA.x - bird.body.position.x;
+    let yDist = slingshot.sling.pointA.y - bird.body.position.y;
+    console.log("xDist: " + xDist);
+    console.log("yDist: " + yDist);
+    let forceToAdd = {x: 0.3*xDist, y: 0.3*yDist};
+    Matter.Body.setVelocity(bird.body, forceToAdd);
+    Composite.remove(engine.world, slingshot.sling);
+    if (--numOfShots > 0) {
+        setTimeout(() => {
+            let nextBird = new Bird(width*.12, height*.85, 15);
+            slingshot = new Slingshot(width*.12, height*.85, nextBird.body);
+            bird = nextBird;
+        }, 1000);
+    }  
+}
+
 onmouseup = (event) => {
     for (let i = 0; i < bodies.length; i++) {
         if (bodies[i] == bird.body & mConstraint.mouse.collisionFilter != 2) {
-            setTimeout(() => {
-                slingshot.fly();
-                bird.body.collisionFilter.category = 0b10;
-                shotBirds[index++] = bird;
-            }, 7);
-            if (--numOfShots > 0) {
-                setTimeout(() => {
-                    bird = new Bird(width*.12, height*.85, 15);
-                    slingshot.attach(bird.body);
-                }, 1000);
-            }       
+            bird.body.collisionFilter.category = 0b10;
+            shotBirds[index++] = bird;
+            fly();     
         }
     }
 }
