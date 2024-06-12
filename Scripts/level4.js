@@ -13,13 +13,16 @@ let index = 0;
 let bodies = [];
 let retryButton, nextButton, backButton, textBox;
 let gameOver = false;
-let currLevel = 1;
+let currLevel = 4;
 
 function spawnPigs() {
     for (let i = 0; i < numOfPigs; i++) {
-        pigs[i] = new Pig(.75*width-50, height-50, 25); 
+        pigs[i] = new Pig(width*.69, height*.9, 25);
     }
 }
 
 function spawnBoxes() {
+    boxes[0] = new Box(0.65*width, .95*height, 10, 95);
+    boxes[1] = new Box(0.75*width, .95*height, 10, 95);
+    boxes[2] = new Box(0.70*width, .8*height, 200, 25);
 }

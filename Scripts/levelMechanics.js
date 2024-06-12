@@ -55,7 +55,7 @@ onmouseup = (event) => {
                 slingshot.fly();
                 bird.body.collisionFilter.category = 0b10;
                 shotBirds[index++] = bird;
-            }, 7);
+            }, 10);
             if (--numOfShots > 0) {
                 setTimeout(() => {
                     bird = new Bird(width*.12, height*.85, 15);
@@ -99,13 +99,18 @@ function checkCollisions() {
                     pigs[j].die();
                 }, 200);
                 --numOfPigs;
+                console.log(numOfPigs);
             }
         }
     }
-    if (numOfPigs <= 0) {
-        win();
+    let someAlive = false;
+    for (let i = 0; i < pigs.length; i++) {
+        someAlive = someAlive || pigs[i].isAlive;
     }
-    else if (numOfShots <= 0) {
+    if (!someAlive) {
+        win();
+    } else if (numOfShots <= 0) {
+        console.log("hi")
         lose();
     }
 }
