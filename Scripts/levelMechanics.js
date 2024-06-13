@@ -1,4 +1,4 @@
-var repeats = 0;
+const repeats = 0;
 
 function setup() {
     canvas = document.querySelector('canvas');
