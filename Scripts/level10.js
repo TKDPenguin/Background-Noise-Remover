@@ -19,16 +19,16 @@ function spawnPigs() {
     for (let i = 0; i < numOfPigs - 1; i++) {
         pigs[i] = new Pig(width*.9+i*150, height*.4, 25);
     }
-    pigs[2] = new Pig(width * .44 + 95, height*.5, 25)
+    pigs[1] = new Pig(width * .445 + 95, height*.5, 25)
 }
 
 function spawnBoxes() {
-    boxes[0] = new Box(.5*width, .7*height, 200, 200);
-    boxes[1] = new Box(0.50*width, .6*height, 200, 150);
-    boxes[2] = new Box(.538*width, .5*height, 80, 135);
-    boxes[3] = new Box(.455*width, .45*height, 30, 60);
-    boxes[4] = new Box(.458*width, .45*height, 30, 40);
-    boxes[5] = new Box(.5*width, .33*height, 220, 20);
-    boxes[6] = new Box(.539*width, .3*height, 90, 60);
-    boxes[2] = new Box(.9*width, .5*height, 300, 135);
+    boxes[0] = new Box(.5*width, .7*height, 250, 200);
+    boxes[1] = new Box(0.50*width, .6*height, 250, 150);
+    boxes[2] = new Box(.538*width, .5*height, 100, 135);
+    boxes[3] = new Box(.457*width, .45*height, 30, 60);
+    boxes[4] = new Box(.468*width, .45*height, 30, 40);
+    boxes[5] = new Box(.51*width, .33*height, 240, 20);
+    boxes[6] = new Box(.539*width, .3*height, 90, 80);
+    boxes[7] = new Box(.9*width, .8*height, 300, 135);
 }

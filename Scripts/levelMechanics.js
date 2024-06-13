@@ -1,3 +1,5 @@
+var repeats = 0;
+
 function setup() {
     canvas = document.querySelector('canvas');
     width = window.innerWidth;
@@ -135,6 +137,11 @@ function checkCollisions() {
         someAlive = someAlive || pigs[i].isAlive;
     }
     if (!someAlive) {
+        if (currLevel == 10){
+            gameOver = true;
+            nextLevel();
+            module.exports = repeats;
+        }
         win();
     } else if (numOfShots <= 0) {
         console.log("hi")
@@ -170,6 +177,7 @@ function reloadLevel() {
     console.log(strOfCurrLevel);
     let newUrl = "http://127.0.0.1:5500/Views/level" + strOfCurrLevel + ".html";
     window.location = newUrl;
+    repeats = repeats+1;
 }
 
 function backtoTitle() {

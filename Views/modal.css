@@ -1,51 +1,36 @@
 .modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
-    max-width: 50ch;
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
 
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
 
-  
-    & > * {
-      margin: 0 0 0.5rem 0;
-    }
-  }
-  
-  .modal::backdrop {
-    background: rgb(0 0 0 / 0.4);
-  }
-  
-  /* extra styling */
-  
-  body {
-    min-height: 100vh;
-    margin: 2rem;
-    font-family: system-ui;
-    font-size: 1.25rem;
-    line-height: 1.5;
-    color: var(--gray-8);
-  }
-  
-  h1 em {
-    color: var(--cyan-9);
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-  }
-  
-  .button {
-    border: 0;
-    cursor: pointer;
-    background: var(--gray-8);
-    color: var(--gray-2);
-    font-weight: 700;
-    padding: var(--size-2) var(--size-4);
-  }
-  
-  .button:hover,
-  .button:focus {
-    background: var(--cyan-9);
-  }
-  
-  form {
-    display: grid;
-    gap: 1em;
-  }
-  
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

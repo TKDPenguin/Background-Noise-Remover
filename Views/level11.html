@@ -1,43 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/matter-js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/modal.css"/>
-    <title>Level 1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
 </head>
-
 <body>
-    <script src="../Scripts/modal.js"></script>
-    <script src="../Scripts/levelMechanics.js"></script>
-    
-    <h1>Modals the <em>easy</em> way</h1>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit alias dicta quibusdam cumque ipsa ipsum reiciendis animi, officia provident veniam quis delectus minima earum suscipit ea, beatae vitae ipsam nemo.</p>
-    <p>Alias, architecto sapiente nostrum id, sed explicabo numquam aspernatur ratione qui excepturi repellat porro culpa molestiae? Culpa dolorem commodi cupiditate, eos deleniti similique repellendus nam velit natus a soluta et.</p>
-    <p>Fugiat ratione impedit officiis? Eligendi sapiente culpa tenetur esse quo reiciendis illum vero nisi ullam consequatur illo molestiae, nihil eaque. Esse asperiores tenetur natus! Quo asperiores molestias sed assumenda alias.</p>
-    <p>Sequi quo animi, nostrum laboriosam veritatis consequatur. Eos cumque unde porro explicabo provident, possimus alias magni pariatur quis consequuntur voluptatum? Debitis necessitatibus facilis fugiat repudiandae nobis neque nam, vel odio?</p>
-    <button class="button open-button">open modal</button>
+  <script src="../Scripts/levelMechanics.js"></script>
 
-    <dialog class="modal" id="modal">
-    <h2>An interesting title</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum esse nisi, laboriosam illum temporibus ipsam?</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, quo.</p>
-    <button class="button close-button">close modal</button>
-    <form class="form" method="dialog">
-        <label>Your name <input type="text"></label>
-        <label>Your email <input type="email"></label>
-        <button class="button" type="submit">submit form</button>
-    </form>
+<h1>You've reached the end!</h1>
 
-    </dialog>
-<!--   
-  <form class="form" method="dialog">
-    <label>Your name <input type="text"></label>
-    <label>Your email <input type="email"></label>
-    <button class="button" type="submit">submit form</button>
-  </form>-->
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Stats</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="output"></div>
+    <script>
+      // Access the variable defined in script.js
+      let message = `Over the 10 levels you have pressed the restart button ${repeats} times`;
+      document.getElementById("output").innerText = message;
+  </script>
+  </div>
+
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
 </body>
 </html>
-
