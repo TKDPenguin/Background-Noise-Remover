@@ -13,7 +13,7 @@ let index = 0;
 let bodies = [];
 let retryButton, nextButton, backButton, textBox;
 let gameOver = false;
-let currLevel = 8;
+let currLevel = 10;
 
 function spawnPigs() {
     for (let i = 0; i < 4; i++) {
