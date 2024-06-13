@@ -19,7 +19,7 @@ function spawnPigs() {
     for (let i = 0; i < numOfPigs - 1; i++) {
         pigs[i] = new Pig(width*.69+i*150, height*.92, 25);
     }
-    pigs[2] = new Pig(width * .69 + 95, height*.74, 25)
+    pigs[2] = new Pig(width * .69 + 95, height*.76, 25)
 }
 
 function spawnBoxes() {

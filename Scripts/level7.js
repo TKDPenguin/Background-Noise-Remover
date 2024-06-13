@@ -17,10 +17,10 @@ let currLevel = 7;
 
 function spawnPigs() {
     for (let i = 0; i < 3; i++) {
-        pigs[i] = new Pig(width*.69, height*.9-i*250, 25);
+        pigs[i] = new Pig(width*.69, height*.9-i*350, 25);
     }
     for (let i = 3; i < 6; i++) {
-        pigs[i] = new Pig(width*.89, height*.9-(i-3)*250, 25);
+        pigs[i] = new Pig(width*.89, height*.9-(i-3)*350, 25);
     }
 }
 

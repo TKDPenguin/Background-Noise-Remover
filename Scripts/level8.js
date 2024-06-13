@@ -17,7 +17,7 @@ let currLevel = 8;
 
 function spawnPigs() {
     for (let i = 0; i < 4; i++) {
-        pigs[i] = new Pig(width*.70, height*.9-i*210-25, 25);
+        pigs[i] = new Pig(width*.70, height*.9-i*180-25, 25);
     }
 }
 
@@ -25,16 +25,16 @@ function spawnBoxes() {
     // tower 1
     boxes[0] = new Box(0.65*width, .95*height, 50, 180);
     boxes[1] = new Box(0.75*width, .95*height, 50, 180);
-    boxes[2] = new Box(0.70*width, .8*height, 250, 10);
-    boxes[3] = new Box(0.66*width, .6*height, 30, 180);
-    boxes[4] = new Box(0.74*width, .6*height, 30, 180);
-    boxes[5] = new Box(0.70*width, .5*height, 230, 10);
-    boxes[6] = new Box(0.67*width, .3*height, 20, 180);
-    boxes[7] = new Box(0.73*width, .3*height, 20, 180);
-    boxes[8] = new Box(0.70*width, .22*height, 180, 10);
-    boxes[9] = new Box(0.68*width, .08*height, 12, 150);
-    boxes[10] = new Box(0.72*width, .08*height, 12, 150);
-    boxes[11] = new Box(0.70*width, .01*height, 150, 10);
+    boxes[2] = new Box(0.70*width, .85*height, 250, 10);
+    boxes[3] = new Box(0.66*width, .75*height, 30, 180);
+    boxes[4] = new Box(0.74*width, .75*height, 30, 180);
+    boxes[5] = new Box(0.70*width, .65*height, 230, 10);
+    boxes[6] = new Box(0.67*width, .55*height, 20, 180);
+    boxes[7] = new Box(0.73*width, .55*height, 20, 180);
+    boxes[8] = new Box(0.70*width, .45*height, 180, 10);
+    boxes[9] = new Box(0.68*width, .35*height, 12, 150);
+    boxes[10] = new Box(0.72*width, .35*height, 12, 150);
+    boxes[11] = new Box(0.70*width, .25*height, 150, 10);
     
     // tower 2
 }

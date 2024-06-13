@@ -142,6 +142,7 @@ btn.onclick = function() {
 
 titleScreenBtn.onclick = function() {
   repeats = 0;
+  localStorage.setItem('repeats', repeats);
   let newUrl = "http://127.0.0.1:5500/Views/titleScreen.html";
   window.location = newUrl;
 }
