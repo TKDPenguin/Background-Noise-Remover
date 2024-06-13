@@ -101,6 +101,11 @@ button:active {
 <!-- Trigger/Open The Modal -->
 <button id="myBtn">Open Replay Stats</button>
 
+<br> <br>
+
+<!-- Return to the title screen -->
+<button id="titleScreenBtn">Return to the Title Screen</button>
+
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -124,12 +129,20 @@ var modal = document.getElementById("myModal");
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
 
+// Get the button that returns the user to the title screen
+var titleScreenBtn = document.getElementById("titleScreenBtn");
+
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
 btn.onclick = function() {
   modal.style.display = "block";
+}
+
+titleScreenBtn.onclick = function() {
+  let newUrl = "http://127.0.0.1:5500/Views/titleScreen.html";
+  window.location = newUrl;
 }
 
 // When the user clicks on <span> (x), close the modal
