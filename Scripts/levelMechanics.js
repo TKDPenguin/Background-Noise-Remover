@@ -1,4 +1,4 @@
-const repeats = 0;
+let repeats = localStorage.getItem('repeats') ? parseInt(localStorage.getItem('repeats')) : 0;
 
 function setup() {
     canvas = document.querySelector('canvas');
@@ -178,6 +178,7 @@ function reloadLevel() {
     let newUrl = "http://127.0.0.1:5500/Views/level" + strOfCurrLevel + ".html";
     window.location = newUrl;
     repeats = repeats+1;
+    localStorage.setItem('repeats', repeats);
 }
 
 function backtoTitle() {
